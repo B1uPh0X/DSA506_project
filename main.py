@@ -16,14 +16,19 @@ are represented by the S&P 500.
 # Load data
 @st.cache_data
 def load_data(start, end):
-    tickers = ["^RUT", "^GSPC"]  # Russell 2000 and S&P 500
-    data = yf.download(tickers, start=start, end=end)["Adj Close"]
-    data = data.reset_index()
-    data = data.rename(columns={
-        "^RUT": "Russell 2000",
-        "^GSPC": "S&P 500"
-    })
-    return data
+    tickers = ["^RUT", "^GSPC"]
+    data = yf.download(tickers, start=start, end=end, group_by='ticker')
+    print(data.head)
+    print(data.columns)
+    
+    # Build a clean DataFrame with 'Close' prices
+    df = pd.DataFrame({
+        "Date": data.index,
+        "Russell 2000": data["^RUT"]["Close"],
+        "S&P 500": data["^GSPC"]["Close"]
+    }).reset_index(drop=True)
+    
+    return df
 
 # Sidebar filters
 st.sidebar.header("Filters")
