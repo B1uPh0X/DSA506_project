@@ -3,7 +3,7 @@ import pandas as pd
 import yfinance as yf
 import plotly.express as px
 
-st.set_page_config(page_title="Market QUEST Dashboard", layout="wide")
+st.set_page_config(page_title="Small-Cap vs Large-Cap Market Analysis", layout="wide")
 
 # --------------------------------------------------
 # TITLE
